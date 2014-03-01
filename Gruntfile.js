@@ -139,7 +139,7 @@ module.exports = function(grunt) {
         banner: '<%= meta.banner %>'
       },
       dist: {
-        src: ['<%= yo.src %>/<%= pkg.name %>.js'],
+        src: ['<%= yo.src %>/**/*.js'],
         dest: '<%= yo.dist %>/<%= pkg.name %>.js'
       }
       // dist: {
@@ -154,7 +154,7 @@ module.exports = function(grunt) {
         stripBanners: true
       },
       dist: {
-        src: ['<%= yo.src %>/<%= pkg.name %>.js'],
+        src: ['<%= yo.src %>/**/*.js'],
         dest: '<%= yo.dist %>/<%= pkg.name %>.js'
       }
     },
