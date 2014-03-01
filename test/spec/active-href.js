@@ -3,6 +3,10 @@
 describe('Module: activeHref', function () {
   var scope, $sandbox, $compile, $location;
 
+  var stubLocation = function(path) {
+    $location.path = function() { return path; };
+  };
+
   // load the controller's module
   beforeEach(module('activeHref'));
 
@@ -22,7 +26,11 @@ describe('Module: activeHref', function () {
   var templates = {
     'default': {
       scope: {},
-      element: '<a href="/#/path/to/stuff" active-href></div>'
+      element: '<a href="/#/path/to/stuff" active-href></a>'
+    },
+    'custom_route' : {
+      scope: {},
+      element: '<a href="/#/something" route-matcher="/custom_path/to/stuff" active-href></a>'
     }
   };
 
@@ -36,18 +44,24 @@ describe('Module: activeHref', function () {
   }
 
   it('adds the .active css class when href matches the current path', function () {
-    $location.path = function() {
-      return '/path/to/stuff';
-    };
+    stubLocation('/path/to/stuff');
     var elm = compileDirective();
     expect(elm.hasClass('active')).toBe(true);
   });
 
   it('doesn\'t the .active css class when href doesn\'t match', function () {
-    $location.path = function() {
-      return '/not_path/to/stuff';
-    };
+    stubLocation('/not_path/to/stuff');
     var elm = compileDirective();
+    expect(elm.hasClass('active')).toBe(false);
+  });
+
+  it('uses route-matcher as pattern to check against', function () {
+    stubLocation('/custom_path/to/stuff');
+    var elm = compileDirective('custom_route');
+    expect(elm.hasClass('active')).toBe(true);
+
+    stubLocation('/custom_path/to/nothing');
+    var elm = compileDirective('custom_route');
     expect(elm.hasClass('active')).toBe(false);
   });
 
