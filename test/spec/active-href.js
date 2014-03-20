@@ -61,8 +61,22 @@ describe('Module: activeHref', function () {
     expect(elm.hasClass('active')).toBe(true);
 
     stubLocation('/custom_path/to/nothing');
-    var elm = compileDirective('custom_route');
+    elm = compileDirective('custom_route');
     expect(elm.hasClass('active')).toBe(false);
+  });
+
+  it('works for all variants of the href attribute', function () {
+    var attrs = [ 'href', 'ng-href', 'bo-href', 'bo-href-i' ];
+
+    stubLocation('/path/to/stuff');
+    angular.forEach(attrs, function(attr) {
+      var tpl = '<a ' + attr + '="/#/path/to/stuff" active-href></a>';
+      var $element = $(tpl).appendTo($sandbox);
+      $element = $compile($element)(scope);
+      scope.$digest();
+      expect($element.hasClass('active')).toBe(true);
+    });
+
   });
 
 });

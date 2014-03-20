@@ -6,7 +6,6 @@ angular.module('activeHref', [])
       if ( !pattern ) { return false; }
       var regex = new RegExp(pattern);
       return regex.test($location.path());
-      return false;
     };
 
     var matchesHref = function(href) {
@@ -16,7 +15,8 @@ angular.module('activeHref', [])
     };
 
     var matchesPath = function(attrs) {
-      return matchesHref(attrs.href) || matchesCustom(attrs.routeMatcher);
+      var href = attrs.href || attrs.ngHref || attrs.boHref || attrs.boHrefI;
+      return matchesHref(href) || matchesCustom(attrs.routeMatcher);
     };
 
     var link = function(scope, element, attrs) {

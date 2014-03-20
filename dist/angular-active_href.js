@@ -8,7 +8,6 @@ angular.module('activeHref', []).directive('activeHref', [
       }
       var regex = new RegExp(pattern);
       return regex.test($location.path());
-      return false;
     };
     var matchesHref = function (href) {
       if (!href) {
@@ -18,7 +17,8 @@ angular.module('activeHref', []).directive('activeHref', [
       return $location.path() === path;
     };
     var matchesPath = function (attrs) {
-      return matchesHref(attrs.href) || matchesCustom(attrs.routeMatcher);
+      var href = attrs.href || attrs.ngHref || attrs.boHref || attrs.boHrefI;
+      return matchesHref(href) || matchesCustom(attrs.routeMatcher);
     };
     var link = function (scope, element, attrs) {
       if (matchesPath(attrs)) {
