@@ -31,6 +31,10 @@ describe('Module: activeHref', function () {
     'custom_route' : {
       scope: {},
       element: '<a href="/#/something" route-matcher="/custom_path/to/stuff" active-href></a>'
+    },
+    'nested_link' : {
+      scope: {},
+      element: '<li active-href><a href="/#/active"></a></li>'
     }
   };
 
@@ -79,4 +83,15 @@ describe('Module: activeHref', function () {
 
   });
 
+  it('adds the active class to the current element if one of the child links matches current path', function () {
+    var listElm;
+
+    stubLocation('/active');
+    listElm = compileDirective('nested_link');
+    expect(listElm.hasClass('active')).toBe(true);
+
+    stubLocation('/inactive');
+    listElm = compileDirective('nested_link');
+    expect(listElm.hasClass('active')).toBe(false);
+  });
 });

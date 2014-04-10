@@ -19,8 +19,18 @@ angular.module('activeHref', [])
       return matchesHref(href) || matchesCustom(attrs.routeMatcher);
     };
 
+    var childLinkMatchesPath = function(elm) {
+      var links = elm.find('a');
+      var found = false;
+      angular.forEach(links, function(link) {
+        var href = angular.element(link).attr('href');
+        if ( matchesHref(href) ) { found = true; }
+      });
+      return found;
+    };
+
     var link = function(scope, element, attrs) {
-      if ( matchesPath(attrs) ) {
+      if ( matchesPath(attrs) || childLinkMatchesPath(element) ) {
         element.addClass('active');
       }
     };
