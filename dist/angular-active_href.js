@@ -13,7 +13,7 @@ angular.module('activeHref', []).directive('activeHref', [
       if (!href) {
         return false;
       }
-      var path = href.replace(/^\/#/, '');
+      var path = href.replace(/^(\/#|\#)[^?\/]*/, '');
       return $location.path() === path;
     };
     var matchesPath = function (attrs) {

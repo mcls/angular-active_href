@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Demo</title>
+  <script src="./bower_components/angular/angular.js"></script>
+  <script src="./bower_components/angular-route/angular-route.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+  <script src="dist/angular-active_href.js"></script>
+  <script>
+var demoApp = angular.module('demoApp', ['ngRoute', 'activeHref']);
+
+demoApp.controller('AppCtrl', function($scope, $location) {
+  $scope.ngHrefPath = "ng-href";
+  $scope.getPath = function() {
+    return $location.path();
+  };
+});
+
+demoApp.config(function($routeProvider, $locationProvider) {
+  $routeProvider.otherwise({
+    templateUrl: 'page.html',
+    controller: 'AppCtrl'
+  });
+
+  $locationProvider.html5Mode(false);
+  console.log($locationProvider.hashPrefix('!'));
+});
+  </script>
+
+  <style>
+a, a:focus, a:active, a:visited {
+  color: #0000BB;
+}
+.active {
+  color: white !important;
+  background-color: #0000BB;
+}
+  </style>
+</head>
+<body ng-app="demoApp">
+  <div ng-controller="AppCtrl">
+    <div ng-view>
+    </div>
+  </div>
+  <script type="text/ng-template" id="page.html">
+    <h1>Demo</h1>
+    <p>Path: {{getPath()}}</p>
+    <ul>
+      <li><a active-href href="#!/simple">Simple</a></li>
+      <li><a active-href ng-href="#!/{{ngHrefPath}}">Using ngHref</a></li>
+    </ul>
+  </script>
+</body>
+</html>

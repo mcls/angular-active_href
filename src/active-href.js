@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('activeHref', [])
-  .directive('activeHref', function($location) {
+  .directive('activeHref', ['$location', function($location) {
     var matchesCustom = function(pattern) {
       if ( !pattern ) { return false; }
       var regex = new RegExp(pattern);
@@ -10,7 +10,7 @@ angular.module('activeHref', [])
 
     var matchesHref = function(href) {
       if ( !href ) { return false; }
-      var path = href.replace(/^\/#/, '');
+      var path = href.replace(/^(\/#|\#)[^?\/]*/, '');
       return $location.path() === path;
     };
 
@@ -41,4 +41,4 @@ angular.module('activeHref', [])
       link: link
     };
 
-  });
+  }]);
