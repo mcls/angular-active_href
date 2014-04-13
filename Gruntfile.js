@@ -67,12 +67,13 @@ module.exports = function(grunt) {
         ],
         options: {
           livereload: yoConfig.livereload
-        }
+        },
+        tasks: ['build']
       },
       test: {
         files: '<%= jshint.test.src %>',
         tasks: ['jshint:test', 'qunit']
-      }
+      },
     },
     connect: {
       options: {
