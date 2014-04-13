@@ -22,7 +22,7 @@ demoApp.config(function($routeProvider, $locationProvider) {
   });
 
   $locationProvider.html5Mode(false);
-  console.log($locationProvider.hashPrefix('!'));
+  $locationProvider.hashPrefix('!');
 });
   </script>
 
@@ -30,7 +30,7 @@ demoApp.config(function($routeProvider, $locationProvider) {
 a, a:focus, a:active, a:visited {
   color: #0000BB;
 }
-.active {
+.active, .active a {
   color: white !important;
   background-color: #0000BB;
 }
@@ -47,6 +47,7 @@ a, a:focus, a:active, a:visited {
     <ul>
       <li><a active-href href="#!/simple">Simple</a></li>
       <li><a active-href ng-href="#!/{{ngHrefPath}}">Using ngHref</a></li>
+      <li active-href><a href="#!/nested">Nested link</a></li>
     </ul>
   </script>
 </body>
